@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoTracker</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        background-color: #f0f8ea;
+        padding: 20px;
+    }
+    
+    header {
+        background-color: #4CAF50;
+        color: white;
+        padding: 15px;
+        font-size: 24px;
+    }
+    
+    main {
+        margin-top: 20px;
+    }
+    
+    input {
+        padding: 10px;
+        width: 60%;
+        margin: 10px 0;
+    }
+    
+    button {
+        padding: 10px 15px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    
+    button:hover {
+        background-color: #45a049;
+    }
+    
+    ul {
+        list-style: none;
+        padding: 0;
+    }
+    
+    li {
+        background: white;
+        padding: 10px;
+        margin: 5px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .delete-btn {
+        background-color: red;
+        color: white;
+        border: none;
+        padding: 5px;
+        cursor: pointer;
+    }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>EcoTracker</h1>
+    </header>
+    
+    <main>
+        <section id="activity-form">
+            <h2>Log Your Eco-Friendly Activity</h2>
+            <input type="text" id="activity" placeholder="Enter activity (e.g., Recycled plastic)">
+            <button onclick="addActivity()">Add Activity</button>
+        </section>
+        
+        <section id="activity-list">
+            <h2>Your Activities</h2>
+            <ul id="activities"></ul>
+        </section>
+    </main>
+    
+    <script src="script.js">document.addEventListener("DOMContentLoaded", function () {
+        loadActivities();
+    });
+    
+    function addActivity() {
+        let activityInput = document.getElementById("activity");
+        let activityValue = activityInput.value.trim();
+    
+        if (activityValue === "") {
+            alert("Please enter an activity!");
+            return;
+        }
+    
+        let activitiesList = document.getElementById("activities");
+    
+        let li = document.createElement("li");
+        li.textContent = activityValue;
+    
+        let deleteButton = document.createElement("button");
+        deleteButton.textContent = "X";
+        deleteButton.classList.add("delete-btn");
+        deleteButton.onclick = function () {
+            li.remove();
+            saveActivities();
+        };
+    
+        li.appendChild(deleteButton);
+        activitiesList.appendChild(li);
+    
+        saveActivities();
+        activityInput.value = "";
+    }
+    
+    function saveActivities() {
+        let activities = [];
+        document.querySelectorAll("#activities li").forEach((li) => {
+            activities.push(li.firstChild.textContent);
+        });
+    
+        localStorage.setItem("ecoActivities", JSON.stringify(activities));
+    }
+    
+    function loadActivities() {
+        let activities = JSON.parse(localStorage.getItem("ecoActivities")) || [];
+        let activitiesList = document.getElementById("activities");
+    
+        activities.forEach((activity) => {
+            let li = document.createElement("li");
+            li.textContent = activity;
+    
+            let deleteButton = document.createElement("button");
+            deleteButton.textContent = "X";
+            deleteButton.classList.add("delete-btn");
+            deleteButton.onclick = function () {
+                li.remove();
+                saveActivities();
+            };
+    
+            li.appendChild(deleteButton);
+            activitiesList.appendChild(li);
+        });
+    }
+    </script>
+</body>
+</html>

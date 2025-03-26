@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock Paper Scissors Lizard Spock</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .game-container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .choices {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .choice {
+            font-size: 36px;
+            padding: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .choice:hover {
+            transform: scale(1.2);
+        }
+        #result {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        #score {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Rock Paper Scissors Lizard Spock</h1>
+        <div class="choices">
+            <div class="choice" onclick="play('rock')">🗿</div>
+            <div class="choice" onclick="play('paper')">📄</div>
+            <div class="choice" onclick="play('scissors')">✂️</div>
+            <div class="choice" onclick="play('lizard')">🦎</div>
+            <div class="choice" onclick="play('spock')">🖖</div>
+        </div>
+        <div id="result"></div>
+        <div id="score">Player: 0 - Computer: 0</div>
+    </div>
+    <script>
+        const choices = ['rock', 'paper', 'scissors', 'lizard', 'spock'];
+        const emojis = {
+            rock: '🗿',
+            paper: '📄',
+            scissors: '✂️',
+            lizard: '🦎',
+            spock: '🖖'
+        };
+        const resultElement = document.getElementById('result');
+        const scoreElement = document.getElementById('score');
+        let playerScore = 0;
+        let computerScore = 0;
+
+        const rules = {
+            rock: ['scissors', 'lizard'],
+            paper: ['rock', 'spock'],
+            scissors: ['paper', 'lizard'],
+            lizard: ['paper', 'spock'],
+            spock: ['rock', 'scissors']
+        };
+
+        function computerChoice() {
+            return choices[Math.floor(Math.random() * choices.length)];
+        }
+
+        function play(playerChoice) {
+            const computer = computerChoice();
+            const result = getResult(playerChoice, computer);
+            
+            updateScore(result);
+            displayResult(playerChoice, computer, result);
+        }
+
+        function getResult(player, computer) {
+            if (player === computer) return 'tie';
+            return rules[player].includes(computer) ? 'win' : 'lose';
+        }
+
+        function updateScore(result) {
+            if (result === 'win') playerScore++;
+            if (result === 'lose') computerScore++;
+            scoreElement.textContent = `Player: ${playerScore} - Computer: ${computerScore}`;
+        }
+
+        function displayResult(player, computer, result) {
+            const resultText = result === 'tie' ? "It's a tie!" :
+                               result === 'win' ? "You win!" : "Computer wins!";
+            
+            resultElement.innerHTML = `
+                You chose ${emojis[player]} ${player}<br>
+                Computer chose ${emojis[computer]} ${computer}<br>
+                ${resultText}
+            `;
+        }
+    </script>
+</body>
+</html>

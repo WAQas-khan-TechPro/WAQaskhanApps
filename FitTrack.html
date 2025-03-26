@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitTrack - Fitness Planner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: black;
+        }
+        input, select, button {
+            width: calc(100% - 20px);
+            margin: 5px 0;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background: #ff7e5f;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #eb6841;
+        }
+        .plan-list {
+            list-style: none;
+            padding: 0;
+        }
+        .plan {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f4f4f4;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .delete-btn {
+            color: red;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>FitTrack - Fitness Planner</h2>
+    <div class="container">
+        <input type="text" id="planName" placeholder="Enter plan name">
+        <select id="planType">
+            <option value="Workout">Workout</option>
+            <option value="Nutrition">Nutrition</option>
+        </select>
+        <input type="text" id="planDetails" placeholder="Enter details">
+        <button onclick="addPlan()">Add Plan</button>
+        <ul id="planList" class="plan-list"></ul>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", loadPlans);
+
+        function addPlan() {
+            let name = document.getElementById("planName").value.trim();
+            let type = document.getElementById("planType").value;
+            let details = document.getElementById("planDetails").value.trim();
+            if (!name || !details) return;
+
+            let plans = JSON.parse(localStorage.getItem("plans")) || [];
+            plans.push({ name, type, details });
+            localStorage.setItem("plans", JSON.stringify(plans));
+            
+            document.getElementById("planName").value = "";
+            document.getElementById("planDetails").value = "";
+            loadPlans();
+        }
+
+        function loadPlans() {
+            let planList = document.getElementById("planList");
+            planList.innerHTML = "";
+            let plans = JSON.parse(localStorage.getItem("plans")) || [];
+            
+            plans.forEach((plan, index) => {
+                let li = document.createElement("li");
+                li.className = "plan";
+                li.innerHTML = `<span>${plan.name} (${plan.type}): ${plan.details}</span> 
+                                <span class="delete-btn" onclick="removePlan(${index})">❌</span>`;
+                planList.appendChild(li);
+            });
+        }
+
+        function removePlan(index) {
+            let plans = JSON.parse(localStorage.getItem("plans")) || [];
+            plans.splice(index, 1);
+            localStorage.setItem("plans", JSON.stringify(plans));
+            loadPlans();
+        }
+    </script>
+</body>
+</html>

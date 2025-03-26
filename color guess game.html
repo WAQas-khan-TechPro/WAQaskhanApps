@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f0f0;
+        }
+        .game-container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        #colorDisplay {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            border: 2px solid #333;
+        }
+        .color-options {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .color-option {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .color-option:hover {
+            background-color: #2980b9;
+        }
+        #message {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        #newGame {
+            padding: 10px 20px;
+            font-size: 18px;
+            background-color: #2ecc71;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        #newGame:hover {
+            background-color: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1>Color Guessing Game</h1>
+        <div id="colorDisplay"></div>
+        <div class="color-options" id="colorOptions"></div>
+        <div id="message"></div>
+        <button id="newGame">New Game</button>
+    </div>
+    <script>
+        const colorDisplay = document.getElementById('colorDisplay');
+        const colorOptions = document.getElementById('colorOptions');
+        const message = document.getElementById('message');
+        const newGameButton = document.getElementById('newGame');
+
+        let colors = [];
+        let pickedColor;
+
+        function generateRandomColor() {
+            const r = Math.floor(Math.random() * 256);
+            const g = Math.floor(Math.random() * 256);
+            const b = Math.floor(Math.random() * 256);
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+
+        function generateColors(num) {
+            const arr = [];
+            for (let i = 0; i < num; i++) {
+                arr.push(generateRandomColor());
+            }
+            return arr;
+        }
+
+        function pickColor() {
+            const random = Math.floor(Math.random() * colors.length);
+            return colors[random];
+        }
+
+        function setUpColors() {
+            colors = generateColors(6);
+            pickedColor = pickColor();
+            colorDisplay.style.backgroundColor = pickedColor;
+            colorOptions.innerHTML = '';
+            for (let i = 0; i < colors.length; i++) {
+                const button = document.createElement('button');
+                button.classList.add('color-option');
+                button.style.backgroundColor = colors[i];
+                button.addEventListener('click', function() {
+                    const clickedColor = this.style.backgroundColor;
+                    if (clickedColor === pickedColor) {
+                        message.textContent = 'Correct!';
+                        message.style.color = '#2ecc71';
+                        changeColors(clickedColor);
+                    } else {
+                        this.style.backgroundColor = '#f0f0f0';
+                        message.textContent = 'Try Again';
+                        message.style.color = '#e74c3c';
+                    }
+                });
+                colorOptions.appendChild(button);
+            }
+        }
+
+        function changeColors(color) {
+            const buttons = document.querySelectorAll('.color-option');
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].style.backgroundColor = color;
+            }
+        }
+
+        function resetGame() {
+            message.textContent = '';
+            setUpColors();
+        }
+
+        newGameButton.addEventListener('click', resetGame);
+        resetGame();
+    </script>
+</body>
+</html>

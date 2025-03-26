@@ -1,0 +1,261 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+    color: #333;
+    transition: 0.3s;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: #008080;
+    color: white;
+}
+
+#sidebar {
+    position: fixed;
+    left: -250px;
+    top: 0;
+    width: 250px;
+    height: 100%;
+    background: #333;
+    color: white;
+    transition: 0.3s;
+    padding-top: 20px;
+    overflow-y: auto;
+    bottom: 200px;
+    z-index: 3;
+}
+
+
+#sidebar > span > .close-btn{
+    position: fixed;
+    margin: 0;
+    margin-left: 170px;
+    background-color: #222;
+    color: red;
+    border: 4px solid #00363d;
+    margin-top: -18px;
+}
+#sidebar > span{
+    display: flex;
+    align-items: space-between;
+    color: #0be3ff;
+    padding: 8px;
+    width: 100%;
+    text-align: center;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'Unicode';
+}
+
+#sidebar ul {
+    list-style: none;
+    padding: 0;
+}
+
+#sidebar ul li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+#sidebar ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+#sidebar ul li:hover {
+    background: #444;
+}
+
+#sidebar > #search{
+    background-color:#333;
+    width: auto;
+    padding: 10px;
+    outline: #1E1E1E;
+    color: #ffffff;
+    font-size: larger;
+    font-family: 'Times New Roman', Times, serif;
+    border-radius: 10vh;
+    width: 90%;
+}
+#sidebar > #search:active{
+    border: none;
+}
+
+#quran-container {
+    padding: 20px;
+}
+
+.surah {
+    background: white;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.ayah {
+    display: block;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    direction: rtl;
+    margin-bottom: 5px;
+}
+
+.ayah.playing {
+    background: #ff9900;
+}
+
+button {
+    background: #022736;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin: 5px 0;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 1em;
+}
+
+button:hover {
+    background: #005f5f;
+}
+
+.play-btn {
+    margin-left: 10px;
+    font-size: 1em;
+    background: #ff9800;
+}
+
+.play-btn:hover {
+    background: #e68900;
+}
+
+#translation-container {
+    position: fixed;
+    bottom: 0;
+    width: 90vw;
+    background: #222;
+    color: white;
+    padding: 10px;
+    padding-right: 20px;
+    text-align: center;
+}
+
+.dark-mode {
+    background: #222;
+    color: white;
+}
+
+.dark-mode .surah {
+    background: #333;
+    color: white;
+}
+
+/* Sidebar - About Developer */
+.about-developer {
+    text-align: center;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    margin-top: 20px;
+    margin: 5px;
+    margin-bottom: 30px;
+    color: #fff;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease-in-out;
+}
+
+.about-developer:hover {
+    transform: translateY(-3px);
+}
+
+.about-developer img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    border: 2px solid #00c3ff;
+}
+
+.about-developer h3 {
+    font-size: 18px;
+    margin: 5px 0;
+    font-weight: bold;
+    color: #00c3ff;
+}
+
+.about-developer p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+/* Social Icons */
+.social-icons a {
+    display: inline-block;
+    margin: 5px;
+    font-size: 22px;
+    color: #ffffff;
+    text-decoration: none;
+    transition: 0.3s ease-in-out;
+}
+
+.social-icons a:hover {
+    color: #00c3ff;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 15px;
+    background: linear-gradient(135deg, #1E1E1E, #292929);
+    color: #fff;
+    font-size: 14px;
+    box-shadow: 0px -2px 6px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.footer-container p {
+    margin: 5px 0;
+    font-size: 14px;
+    opacity: 0.8;
+}
+
+
+/* Glowing Effect */
+@keyframes glow {
+    0% {
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    }
+    100% {
+        box-shadow: 0px 0px 15px rgba(255, 215, 0, 0.7);
+    }
+}
+
+/* Smooth Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Styling the Name */
+.developer-info span {
+    color: #FFD700; /* Gold color */
+    font-size: 18px;
+    text-shadow: 0px 0px 10px rgba(255, 215, 0, 0.8);
+    font-weight: bold;
+}
+

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🤣 Ultimate Joke Generator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: radial-gradient(circle, #0f2027, #203a43, #2c5364);
+    color: #f8f8f8;
+    text-align: center;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: background 0.5s ease-in-out;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0px 5px 25px rgba(0, 255, 255, 0.2);
+    backdrop-filter: blur(15px);
+    max-width: 600px;
+    width: 90%;
+    animation: fadeIn 0.8s ease-in-out;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 20px;
+    text-shadow: 3px 3px 15px rgba(0, 255, 255, 0.8);
+    font-weight: 700;
+}
+
+.dropdown {
+    margin-bottom: 15px;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 16px;
+    background: #1e3c72;
+    color: #fff;
+    border: 1px solid #00e676;
+    outline: none;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.dropdown:hover {
+    box-shadow: 0px 0px 15px rgba(0, 255, 255, 0.8);
+}
+
+.joke-box {
+    background: rgba(255, 255, 255, 0.15);
+    padding: 18px;
+    border-radius: 12px;
+    font-size: 20px;
+    color: #ffffff;
+    animation: pop 0.5s ease-in-out;
+    margin-top: 15px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+@keyframes pop {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.btn {
+    background: linear-gradient(45deg, #4CAF50, #00BCD4);
+    color: white;
+    border: none;
+    padding: 14px 22px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: all 0.3s ease-in-out;
+    font-weight: bold;
+    margin: 12px 6px;
+    box-shadow: 0px 5px 15px rgba(0, 255, 255, 0.5);
+}
+
+.btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.9);
+}
+
+#copy-message {
+    font-size: 16px;
+    color: #00e676;
+    font-weight: bold;
+    margin-top: 12px;
+    display: none;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤣 Ultimate Joke Generator</h1>
+        <select id="category" class="dropdown">
+            <option value="it">IT Jokes</option>
+            <option value="school">School Jokes</option>
+            <option value="dad">Dad Jokes</option>
+            <option value="animal">Animal Jokes</option>
+            <option value="food">Food Jokes</option>
+            <option value="random">Random</option>
+        </select>
+        <div class="joke-box" id="joke">Pick a category and get ready to laugh! 😂</div>
+        <div class="joke-box" id="joke-urdu"></div>
+        <button class="btn" onclick="generateJoke()">😂 New Joke</button>
+        <button class="btn" id="copyBtn">📋 Copy Joke</button>
+        <p id="copy-message">✅ Copied to clipboard!</p>
+    </div>
+
+    <script>
+       const jokes = {
+    "it": [
+    { "en": "Why do programmers hate nature? It has too many bugs! 🐛", "ur": "پروگرامرز قدرت سے کیوں نفرت کرتے ہیں؟ اس میں بہت زیادہ کیڑے ہوتے ہیں!" },
+    { "en": "Why do Java developers wear glasses? Because they can't C#! 🤓", "ur": "جاوا ڈیولپرز چشمہ کیوں پہنتے ہیں؟ کیونکہ وہ C# نہیں دیکھ سکتے!" },
+    { "en": "Why did the coder quit his job? He didn't get arrays (a raise)! 💰", "ur": "کوڈر نے اپنی نوکری کیوں چھوڑی؟ اسے ریز (arrays) نہیں مل رہی تھی!" },
+    { "en": "How do you comfort a JavaScript bug? You console it! 🖥️", "ur": "آپ جاوا اسکرپٹ کے بگ کو کیسے تسلی دیتے ہیں؟ آپ اسے کنسول کرتے ہیں!" },
+    { "en": "Why do programmers prefer dark mode? Because light attracts bugs! 🌑", "ur": "پروگرامرز ڈارک موڈ کیوں پسند کرتے ہیں؟ کیونکہ روشنی کیڑے کھینچتی ہے!" },
+    { "en": "Why was the computer cold? Because it left its Windows open! 🥶", "ur": "کمپیوٹر ٹھنڈا کیوں تھا؟ کیونکہ اس کی ونڈوز کھلی رہ گئی تھی!" },
+    { "en": "Why did the programmer go broke? Because he used up all his cache! 💸", "ur": "پروگرامر دیوالیہ کیوں ہو گیا؟ کیونکہ اس نے اپنا سارا کیش استعمال کر لیا!" },
+    { "en": "Why did the IT guy break up with his girlfriend? She had too many issues! 💔", "ur": "آئی ٹی والے نے اپنی گرل فرینڈ سے بریک اپ کیوں کیا؟ اس کے بہت زیادہ مسائل تھے!" },
+    { "en": "Why do programmers love coffee? Because it helps them Java! ☕", "ur": "پروگرامرز کافی کیوں پسند کرتے ہیں؟ کیونکہ یہ انہیں جاوا کرنے میں مدد دیتی ہے!" },
+    { "en": "Why did the computer get glasses? To improve its website! 👓", "ur": "کمپیوٹر نے چشمہ کیوں پہنا؟ تاکہ اپنی ویب سائٹ بہتر کر سکے!" },
+    { "en": "Why don’t programmers like to go outdoors? The sunlight causes too many refreshes! ☀️", "ur": "پروگرامرز باہر جانا کیوں پسند نہیں کرتے؟ کیونکہ سورج کی روشنی بہت زیادہ ریفریش کرتی ہے!" },
+    { "en": "Why do developers make terrible comedians? Because their jokes are always deprecated! 🎤", "ur": "ڈیولپرز برے کامیڈین کیوں ہوتے ہیں؟ کیونکہ ان کے لطیفے ہمیشہ ڈیپریکیٹ ہو جاتے ہیں!" },
+    { "en": "Why did the programmer bring a ladder to work? Because he heard the code had high levels! 🪜", "ur": "پروگرامر کام پر سیڑھی کیوں لے آیا؟ کیونکہ اس نے سنا کہ کوڈ کا لیول بہت اونچا ہے!" },
+    { "en": "Why do IT support guys never die? Because they just reboot! 🔄", "ur": "آئی ٹی سپورٹ والے کبھی کیوں نہیں مرتے؟ کیونکہ وہ بس ریبوٹ ہو جاتے ہیں!" },
+    { "en": "Why was the JavaScript developer sad? Because he didn’t 'null' his ex properly! 😢", "ur": "جاوا اسکرپٹ ڈیولپر اداس کیوں تھا؟ کیونکہ اس نے اپنی سابقہ کو صحیح طریقے سے 'null' نہیں کیا تھا!" },
+    { "en": "What’s a programmer’s favorite place to hang out? The Foo Bar! 🍻", "ur": "پروگرامرز کی پسندیدہ جگہ کون سی ہے؟ فو بار!" },
+    { "en": "Why did the Python programmer need therapy? He had too many 'self' issues! 🐍", "ur": "پائتھون پروگرامر کو تھراپی کی ضرورت کیوں پڑی؟ کیونکہ اس کے پاس بہت زیادہ 'self' مسائل تھے!" },
+    { "en": "Why did the database administrator break up? Too many 'connections'! 💔", "ur": "ڈیٹا بیس ایڈمنسٹریٹر کا بریک اپ کیوں ہوا؟ بہت زیادہ 'کنیکشن' تھے!" },
+    { "en": "Why did the CSS developer go to therapy? Because he had too many 'div' issues! 🎨", "ur": "CSS ڈیولپر تھراپی پر کیوں گیا؟ کیونکہ اس کے پاس بہت زیادہ 'div' مسائل تھے!" },
+    { "en": "What do you call a group of 8 bits? A byte! And what do you call a group of 8 bytes? A dinner! 🍽️", "ur": "آٹھ بٹس کو کیا کہتے ہیں؟ ایک بائٹ! اور آٹھ بائٹس کو کیا کہتے ہیں؟ ایک ڈنر!" },
+    { "en": "Why did the computer cross the road? To get a better IP address! 📡", "ur": "کمپیوٹر سڑک کیوں پار کر گیا؟ تاکہ ایک بہتر IP ایڈریس حاصل کر سکے!" },
+    { "en": "Why did the developer stay calm? Because he handled exceptions well! 🧘", "ur": "ڈیولپر پرسکون کیوں رہا؟ کیونکہ اس نے ایکسیپشنز اچھے سے ہینڈل کیں!" },
+    { "en": "Why do software engineers never get lost? They follow the roadmap! 🗺️", "ur": "سافٹ ویئر انجینئر کبھی راستہ کیوں نہیں بھولتے؟ کیونکہ وہ روڈ میپ کو فالو کرتے ہیں!" },
+    { "en": "Why was the computer freezing? Because it left its Windows open again! 🖥️❄️", "ur": "کمپیوٹر دوبارہ جم کیوں گیا؟ کیونکہ اس نے اپنی ونڈوز دوبارہ کھول دی تھی!" },
+    { "en": "Why was the IT guy a great friend? Because he always had good 'connections'! 🔌", "ur": "آئی ٹی والا اچھا دوست کیوں تھا؟ کیونکہ اس کے پاس ہمیشہ اچھے 'کنیکشن' تھے!" },
+    { "en": "What’s a hacker’s favorite season? Phishing season! 🎣", "ur": "ہیکر کا پسندیدہ موسم کون سا ہوتا ہے؟ فشنگ سیزن!" },
+    { "en": "Why do Python programmers prefer tea? Because they don’t like Java! 🍵", "ur": "پائتھون پروگرامرز چائے کیوں پسند کرتے ہیں؟ کیونکہ وہ جاوا کو پسند نہیں کرتے!" },
+    { "en": "Why do coders love coffee? Because without it, their code is just a mess! ☕", "ur": "کوڈر کافی کیوں پسند کرتے ہیں؟ کیونکہ اس کے بغیر ان کا کوڈ بس ایک گڑبڑ ہوتا ہے!" },
+    { "en": "Why did the developer refuse to play hide and seek? Because he didn't want to be 'cached'! 🎮", "ur": "ڈیولپر چھپن چھپائی کیوں نہیں کھیلنا چاہتا تھا؟ کیونکہ وہ 'cached' نہیں ہونا چاہتا تھا!" }
+],
+    "school": [
+    { "en": "Why did the student eat his homework? Because the teacher said it was a piece of cake! 🍰", "ur": "طالب علم نے اپنا ہوم ورک کیوں کھا لیا؟ کیونکہ استاد نے کہا تھا کہ یہ کیک کا ٹکڑا ہے!" },
+    { "en": "Why was the math book sad? It had too many problems. 📚", "ur": "ریاضی کی کتاب اداس کیوں تھی؟ اس میں بہت زیادہ مسائل تھے۔" },
+    { "en": "Why can't you trust an atom? Because they make up everything! ⚛️", "ur": "آپ ایٹم پر بھروسہ کیوں نہیں کر سکتے؟ کیونکہ وہ سب کچھ بناتے ہیں!" },
+    { "en": "Why did the teacher wear sunglasses? Because her students were so bright! 😎", "ur": "استاد نے سن گلاسز کیوں پہنے؟ کیونکہ اس کے شاگرد بہت ذہین تھے!" },
+    { "en": "Why did the pencil cross the road? To draw attention! ✏️", "ur": "پنسل سڑک کیوں پار کر گئی؟ توجہ حاصل کرنے کے لیے!" },
+    { "en": "What did the zero say to the eight? Nice belt! 0️⃣8️⃣", "ur": "زیرو نے آٹھ سے کیا کہا؟ اچھی بیلٹ ہے!" },
+    { "en": "Why did the music teacher need a ladder? To reach the high notes! 🎼", "ur": "موسیقی کے استاد کو سیڑھی کی ضرورت کیوں تھی؟ تاکہ وہ اونچے نوٹس تک پہنچ سکے!" },
+    { "en": "Why was the history book always sleepy? Because it was full of dates! 📖", "ur": "تاریخ کی کتاب ہمیشہ نیند میں کیوں رہتی تھی؟ کیونکہ یہ تاریخوں سے بھری ہوئی تھی!" },
+    { "en": "Why do students love history? Because it's full of old stories! 🏛️", "ur": "طلباء تاریخ کیوں پسند کرتے ہیں؟ کیونکہ یہ پرانی کہانیوں سے بھری ہوتی ہے!" },
+    { "en": "Why did the clock go to the principal's office? Because it was ticking off the teacher! ⏰", "ur": "گھڑی پرنسپل کے دفتر کیوں گئی؟ کیونکہ یہ استاد کو تنگ کر رہی تھی!" },
+    { "en": "Why did the biology book look so sad? Because it had too many cells! 🧬", "ur": "حیاتیات کی کتاب اداس کیوں لگ رہی تھی؟ کیونکہ اس میں بہت زیادہ خلیے تھے!" },
+    { "en": "Why don’t school secrets last? Because they always get leaked! 🤫", "ur": "سکول کے راز زیادہ دیر تک کیوں نہیں رہتے؟ کیونکہ وہ ہمیشہ لیک ہو جاتے ہیں!" },
+    { "en": "Why did the student bring a ladder to school? Because he wanted to go to high school! 🏫", "ur": "طالب علم اسکول میں سیڑھی کیوں لایا؟ کیونکہ وہ ہائی اسکول جانا چاہتا تھا!" },
+    { "en": "Why did the notebook look sad? Because it was feeling blue! 📒", "ur": "نوٹ بک اداس کیوں لگ رہی تھی؟ کیونکہ یہ نیلا محسوس کر رہی تھی!" },
+    { "en": "Why was the English teacher always calm? Because she had great 'composure'! 📚", "ur": "انگریزی کی استاد ہمیشہ پرسکون کیوں تھی؟ کیونکہ اس کے پاس زبردست 'composure' تھی!" },
+    { "en": "Why don’t school buses ever get tired? Because they always have new wheels! 🚌", "ur": "سکول بسیں کبھی تھکتی کیوں نہیں؟ کیونکہ ان کے پاس ہمیشہ نئے پہیے ہوتے ہیں!" },
+    { "en": "Why was the geography book unhappy? Because it felt lost! 🌍", "ur": "جغرافیہ کی کتاب اداس کیوں تھی؟ کیونکہ اسے کھویا ہوا محسوس ہو رہا تھا!" },
+    { "en": "What do you call a student who is always on time? An alarm clock! ⏰", "ur": "ایسے طالب علم کو کیا کہتے ہیں جو ہمیشہ وقت پر ہو؟ ایک الارم کلاک!" },
+    { "en": "Why did the teacher sit on his glasses? Because he wanted to improve his outlook! 🤓", "ur": "استاد نے اپنی عینک پر کیوں بیٹھا؟ کیونکہ وہ اپنا نقطہ نظر بہتر بنانا چاہتا تھا!" },
+    { "en": "Why did the kid bring a ladder to the library? To reach the highest grades! 📚", "ur": "بچے نے لائبریری میں سیڑھی کیوں لائی؟ تاکہ سب سے زیادہ گریڈ حاصل کر سکے!" },
+    { "en": "Why do teachers love whiteboards? Because they’re re-markable! 📋", "ur": "اساتذہ وائٹ بورڈز کو کیوں پسند کرتے ہیں؟ کیونکہ وہ دوبارہ مارک کیے جا سکتے ہیں!" },
+    { "en": "What did the teacher say about the kid who kept making jokes? He’s pun-stoppable! 🎤", "ur": "استاد نے اس بچے کے بارے میں کیا کہا جو مسلسل لطیفے سناتا تھا؟ وہ رکنے والا نہیں!" },
+    { "en": "Why was the chalk feeling useless? Because it always got erased! ✏️", "ur": "چاک خود کو بے کار کیوں محسوس کر رہی تھی؟ کیونکہ اسے ہمیشہ مٹا دیا جاتا تھا!" },
+    { "en": "Why was the student eating his book? Because he wanted to digest knowledge! 📖", "ur": "طالب علم اپنی کتاب کیوں کھا رہا تھا؟ کیونکہ وہ علم ہضم کرنا چاہتا تھا!" },
+    { "en": "Why did the student take a ruler to bed? Because he wanted to measure his dreams! 📏", "ur": "طالب علم بیڈ پر پیمانہ کیوں لے گیا؟ کیونکہ وہ اپنے خواب ناپنا چاہتا تھا!" },
+    { "en": "Why was the student writing on the window? Because he wanted a clear view! 🏫", "ur": "طالب علم کھڑکی پر کیوں لکھ رہا تھا؟ کیونکہ وہ صاف نظر حاصل کرنا چاہتا تھا!" },
+    { "en": "Why did the student throw his clock out the window? He wanted to see time fly! ⏳", "ur": "طالب علم نے اپنی گھڑی کھڑکی سے باہر کیوں پھینکی؟ کیونکہ وہ وقت کو اڑتے دیکھنا چاہتا تھا!" },
+    { "en": "Why was the school cafeteria always so noisy? Because it was full of beans! 🍽️", "ur": "سکول کی کینٹین ہمیشہ شور شرابہ کیوں کرتی تھی؟ کیونکہ یہ بینز سے بھری ہوئی تھی!" },
+    { "en": "Why did the student sit on the clock? Because he wanted to be on time! ⏰", "ur": "طالب علم گھڑی پر کیوں بیٹھا؟ کیونکہ وہ وقت پر پہنچنا چاہتا تھا!" },
+    { "en": "Why did the history teacher break up with geography? There was no chemistry! 📖", "ur": "تاریخ کے استاد نے جغرافیہ سے کیوں رشتہ توڑ لیا؟ کیونکہ ان کے درمیان کوئی کیمسٹری نہیں تھی!" }
+],
+    "animal": [
+    { en: "Why don’t elephants use computers? Because they’re afraid of the mouse! 🐘🖱️", ur: "ہاتھی کمپیوٹر کیوں استعمال نہیں کرتے؟ کیونکہ وہ ماؤس سے ڈرتے ہیں!" },
+    { en: "Why don’t seagulls fly over the bay? Because then they’d be bagels! 🥯", ur: "سمندری بگلے سمندر کے اوپر کیوں نہیں اڑتے؟ کیونکہ پھر وہ بیگلز ہوں گے!" },
+    { en: "What do you call a fish wearing a bowtie? Sofishticated! 🎩🐟", ur: "ایک مچھلی جو بو ٹائی پہنے ہو اسے کیا کہتے ہیں؟ سو-فش-ٹیکیٹڈ!" },
+    { en: "Why did the crab never share? Because he’s a little shellfish! 🦀", ur: "کیکڑا کبھی چیزیں کیوں نہیں بانٹتا؟ کیونکہ وہ تھوڑا خودغرض ہوتا ہے!" },
+    { en: "What do you call a sleeping bull? A bulldozer! 🐂", ur: "ایک سوتے ہوئے بیل کو کیا کہتے ہیں؟ بلڈوزر!" },
+    { en: "Why do cows wear bells? Because their horns don’t work! 🐄🔔", ur: "گائیں گھنٹیاں کیوں پہنتی ہیں؟ کیونکہ ان کے سینگ کام نہیں کرتے!" },
+    { en: "What do you call an alligator in a vest? An investigator! 🐊🕵️", ur: "ایک واسکٹ پہنے ہوئے مگرمچھ کو کیا کہتے ہیں؟ انویسٹیگیٹر!" },
+    { en: "Why did the dog sit in the shade? Because he didn’t want to be a hot dog! 🌭🐶", ur: "کتا سائے میں کیوں بیٹھا؟ کیونکہ وہ ہاٹ ڈاگ نہیں بننا چاہتا تھا!" },
+    { en: "What do you get when you cross a snake with a pie? A python! 🐍🥧", ur: "جب آپ سانپ کو پائی کے ساتھ ملاتے ہیں تو کیا بنتا ہے؟ پائتھون!" },
+    { en: "Why do fish live in salt water? Because pepper makes them sneeze! 🐟", ur: "مچھلیاں نمکین پانی میں کیوں رہتی ہیں؟ کیونکہ مرچ انہیں چھینکنے پر مجبور کر دیتی ہے!" }
+    // Add more animal jokes up to 100+
+],
+    "food": [
+        { en: "Why don’t eggs tell jokes? Because they might crack up! 🍳", ur: "انڈے لطیفے کیوں نہیں سناتے؟ کیونکہ وہ پھٹ سکتے ہیں!" },
+        { en: "What’s orange and sounds like a parrot? A carrot! 🥕", ur: "کون سی چیز نارنجی ہے اور طوطے کی طرح آواز دیتی ہے؟ گاجر!" },
+        { en: "Why did the tomato blush? Because it saw the salad dressing! 🍅", ur: "ٹماٹر شرما کیوں گیا؟ کیونکہ اس نے سلاد کو لباس پہنتے دیکھا!" },
+        { en: "What kind of room doesn’t have doors? A mushroom! 🍄", ur: "کس قسم کا کمرہ دروازے نہیں رکھتا؟ ایک مشروم!" },
+        { en: "Why do bananas have to put on sunscreen? Because they peel! 🍌", ur: "کیلے کو سن اسکرین کیوں لگانی پڑتی ہے؟ کیونکہ وہ چھلتے ہیں!" },
+        { en: "What’s a vegetable’s favorite music genre? Beets! 🎶", ur: "سبزیوں کی پسندیدہ موسیقی کون سی ہے؟ بیٹس!" },
+        { en: "Why did the grape stop in the middle of the road? Because it ran out of juice! 🍇", ur: "انگور سڑک کے بیچ میں کیوں رک گیا؟ کیونکہ اس کا جوس ختم ہو گیا!" },
+        { en: "What’s the best way to enjoy a hot dog? Relish it! 🌭", ur: "ہاٹ ڈاگ کا سب سے بہترین لطف کیسے لیا جا سکتا ہے؟ اس کو ذائقہ دیں!" },
+        { en: "Why don’t we tell pizza jokes? Because they’re too cheesy! 🍕", ur: "ہم پیزا کے لطیفے کیوں نہیں سناتے؟ کیونکہ وہ بہت چیز ہیں!" },
+        { en: "Why did the coffee file a police report? It got mugged! ☕", ur: "کافی نے پولیس رپورٹ کیوں درج کرائی؟ کیونکہ اس کا مگ چھین لیا گیا!" },
+        { en: "What’s a vegetable’s favorite martial art? Carrotee! 🥋🥕", ur: "سبزیوں کی پسندیدہ مارشل آرٹ کون سی ہے؟ کیروٹی!" },
+        { en: "Why did the doughnut go to the dentist? To get a filling! 🍩", ur: "ڈونٹ دانتوں کے ڈاکٹر کے پاس کیوں گیا؟ بھرائی کروانے کے لیے!" },
+        { en: "Why did the lettuce win the race? Because it was ahead! 🥬", ur: "لیٹش دوڑ کیوں جیت گیا؟ کیونکہ وہ آگے تھا!" },
+        { en: "Why was the math book sad? Because it had too many problems! 📚", ur: "ریاضی کی کتاب اداس کیوں تھی؟ کیونکہ اس میں بہت سارے مسائل تھے!" },
+        { en: "Why don’t watermelons get married? Because they cantaloupe! 🍉", ur: "تربوز شادی کیوں نہیں کرتے؟ کیونکہ وہ خربوزے ہیں!" }
+        // Add more food jokes up to 100+
+    ],
+
+    "random": [
+    { "en": "I told my wife she was drawing her eyebrows too high. She looked surprised! 😲", "ur": "میں نے اپنی بیوی سے کہا کہ وہ اپنی بھنویں بہت اونچی کھینچ رہی ہے۔ وہ حیران نظر آئی!" },
+    { "en": "Why do cows have hooves instead of feet? Because they lactose! 🐄", "ur": "گائیں پیروں کی بجائے کھُر کیوں رکھتی ہیں؟ کیونکہ وہ لیکٹوز کرتی ہیں!" },
+    { "en": "What did one wall say to the other wall? 'I'll meet you at the corner!' 🏠", "ur": "ایک دیوار نے دوسری دیوار سے کیا کہا؟ 'میں تم سے کونے میں ملوں گا!'" },
+    { "en": "Why don’t skeletons fight each other? They don’t have the guts! 💀", "ur": "ڈھانچے ایک دوسرے سے کیوں نہیں لڑتے؟ ان میں ہمت نہیں ہوتی!" },
+    { "en": "Why did the scarecrow win an award? Because he was outstanding in his field! 🌾", "ur": "کھیت کا پتلا انعام کیوں جیتا؟ کیونکہ وہ اپنے کھیت میں شاندار تھا!" },
+    { "en": "I used to be a baker, but I couldn't make enough dough. 🍞", "ur": "میں پہلے بیکر تھا، لیکن میں کافی آٹا نہیں کما سکا۔" },
+    { "en": "Why do bicycles fall over? Because they are two-tired! 🚲", "ur": "سائیکلیں کیوں گرتی ہیں؟ کیونکہ وہ دو تھکی ہوئی ہوتی ہیں!" },
+    { "en": "I told my computer I needed a break, and now it won’t stop sending me vacation ads. 💻", "ur": "میں نے اپنے کمپیوٹر سے کہا کہ مجھے بریک چاہیے، اب یہ مسلسل چھٹیوں کے اشتہارات بھیج رہا ہے!" },
+    { "en": "Why don’t eggs tell jokes? Because they might crack up! 🥚", "ur": "انڈے لطیفے کیوں نہیں سناتے؟ کیونکہ وہ پھٹ سکتے ہیں!" },
+    { "en": "Why did the golfer bring an extra pair of pants? In case he got a hole in one! ⛳", "ur": "گولفر نے اضافی پتلون کیوں لائی؟ اگر اسے ایک ہی میں سوراخ مل جائے!" },
+    { "en": "Why did the tomato turn red? Because it saw the salad dressing! 🍅", "ur": "ٹماٹر سرخ کیوں ہوا؟ کیونکہ اس نے سلاد کو کپڑے بدلتے دیکھا!" },
+    { "en": "Parallel lines have so much in common. It’s a shame they’ll never meet. 📏", "ur": "متوازی لکیروں میں بہت کچھ مشترک ہے۔ افسوس کی بات یہ ہے کہ وہ کبھی نہیں ملیں گی۔" },
+    { "en": "Why did the banana go to the doctor? Because it wasn’t peeling well! 🍌", "ur": "کیلا ڈاکٹر کے پاس کیوں گیا؟ کیونکہ وہ صحیح محسوس نہیں کر رہا تھا!" },
+    { "en": "I told my wife she should embrace her mistakes. She gave me a hug. 🤗", "ur": "میں نے اپنی بیوی سے کہا کہ وہ اپنی غلطیوں کو گلے لگائے۔ اس نے مجھے گلے لگا لیا۔" },
+    { "en": "Why did the math book look sad? Because it had too many problems! 📖", "ur": "ریاضی کی کتاب افسردہ کیوں نظر آئی؟ کیونکہ اس میں بہت سارے مسائل تھے!" },
+    { "en": "Why was the belt arrested? Because it was holding up a pair of pants! 👖", "ur": "بیلٹ کو کیوں گرفتار کیا گیا؟ کیونکہ وہ پتلون کو سنبھالے ہوئے تھا!" },
+    { "en": "What do you call a fake noodle? An impasta! 🍝", "ur": "جعلی نوڈلز کو کیا کہتے ہیں؟ ایک امپاسٹا!" },
+    { "en": "I only know 25 letters of the alphabet. I don’t know Y. 🔠", "ur": "میں الفاظ کے صرف 25 حروف جانتا ہوں۔ میں Y نہیں جانتا۔" },
+    { "en": "I just wrote a book on reverse psychology. Don’t read it! 📚", "ur": "میں نے الٹی نفسیات پر ایک کتاب لکھی ہے۔ اسے مت پڑھو!" },
+    { "en": "What’s orange and sounds like a parrot? A carrot! 🥕", "ur": "کون سی چیز نارنجی ہے اور طوطے کی طرح لگتی ہے؟ ایک گاجر!" },
+    { "en": "Why do seagulls fly over the sea? Because if they flew over the bay, they’d be bagels! 🥯", "ur": "سمندری بگلے سمندر پر کیوں اڑتے ہیں؟ کیونکہ اگر وہ خلیج پر اڑیں تو وہ بیگلز ہوں گے!" },
+    { "en": "Did you hear about the kidnapping at school? It’s okay, he woke up! 🏫", "ur": "کیا آپ نے اسکول میں اغوا کے بارے میں سنا؟ فکر نہ کرو، وہ جاگ گیا!" }
+]
+
+};
+
+function generateJoke() {
+    const category = document.getElementById("category").value;
+    const jokeBox = document.getElementById("joke");
+    const jokeBoxUrdu = document.getElementById("joke-urdu");
+
+    if (jokes[category] && jokes[category].length > 0) {
+        const randomIndex = Math.floor(Math.random() * jokes[category].length);
+        const joke = jokes[category][randomIndex];
+
+        jokeBox.textContent = joke.en; // Show English joke
+        jokeBoxUrdu.textContent = joke.ur; // Show Urdu joke
+    } else {
+        jokeBox.textContent = "No jokes found for this category!";
+        jokeBoxUrdu.textContent = "";
+    }
+}
+
+// Copy joke function
+document.getElementById("copyBtn").addEventListener("click", function () {
+    const jokeText = document.getElementById("joke").textContent;
+    navigator.clipboard.writeText(jokeText).then(() => {
+        const copyMessage = document.getElementById("copy-message");
+        copyMessage.style.display = "block";
+        setTimeout(() => { copyMessage.style.display = "none"; }, 2000);
+    });
+});
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindfulMoments</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #3a7bd5, #3a6073);
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color: black;
+        }
+        input, button {
+            width: calc(100% - 20px);
+            margin: 5px 0;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background: #3a7bd5;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #305c91;
+        }
+        .session-list {
+            list-style: none;
+            padding: 0;
+        }
+        .session {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f4f4f4;
+            margin: 8px 0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .delete-btn {
+            color: red;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h2>MindfulMoments - Meditation Tracker</h2>
+    <div class="container">
+        <input type="text" id="sessionName" placeholder="Enter meditation session">
+        <button onclick="addSession()">Add Session</button>
+        <ul id="sessionList" class="session-list"></ul>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", loadSessions);
+
+        function addSession() {
+            let sessionName = document.getElementById("sessionName").value.trim();
+            if (!sessionName) return;
+
+            let sessions = JSON.parse(localStorage.getItem("sessions")) || [];
+            sessions.push(sessionName);
+            localStorage.setItem("sessions", JSON.stringify(sessions));
+            
+            document.getElementById("sessionName").value = "";
+            loadSessions();
+        }
+
+        function loadSessions() {
+            let sessionList = document.getElementById("sessionList");
+            sessionList.innerHTML = "";
+            let sessions = JSON.parse(localStorage.getItem("sessions")) || [];
+            
+            sessions.forEach((session, index) => {
+                let li = document.createElement("li");
+                li.className = "session";
+                li.innerHTML = `<span>${session}</span> 
+                                <span class="delete-btn" onclick="removeSession(${index})">❌</span>`;
+                sessionList.appendChild(li);
+            });
+        }
+
+        function removeSession(index) {
+            let sessions = JSON.parse(localStorage.getItem("sessions")) || [];
+            sessions.splice(index, 1);
+            localStorage.setItem("sessions", JSON.stringify(sessions));
+            loadSessions();
+        }
+    </script>
+</body>
+</html>

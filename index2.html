@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quraan</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+<body>
+    <header>
+        <button id="menu-btn" onclick="openSidebar()">☰</button>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+        <h1>Quraan 🕌</h1>
+        <button id="theme-toggle">🌙</button>
+    </header>
+
+    <div id="sidebar">
+         <!-- Social Media Icons -->
+         <span>WK Islamic Apps
+        <button class="close-btn" onclick="closeSidebar()">✖</button>
+        </span>
+        <input type="text" id="search" onkeyup="searchSurah()" placeholder="Search Surah...">
+        <ul id="surah-list"></ul>
+        
+        <div class="about-developer">
+            <img src="logo.jpg" alt="Waqas Khan">
+            <h3>Waqas Khan</h3>
+            <p>Developer of this Quran App</p>
+            <p>Building innovative and user-friendly web applications.</p>
+ <!-- Social Media Icons -->
+ <div class="social-icons">
+    <a href="https://wa.me/+923441092910" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://github.com/WAQas-khan-TechPro" target="_blank" class="github"><i class="fab fa-github"></i></a>
+    <a href="https://instagram.com/in/code2x_755" target="_blank" class="instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://tiktok.com/in/waqas_25754" target="_blank" class="tiktok"><i class="fab fa-tiktok"></i></a>
+      </div>
+        </div>
+        
+    </div>
+
+
+    <main>
+        <div id="quran-container"></div>
+        
+        <!-- New Translation Section -->
+        <div id="translation-container">
+            <p id="translation-text">Play an Ayah to see the translation...</p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="about-developer">
+            <img src="logo.jpg" alt="Waqas Khan">
+            <h3>Waqas Khan</h3>
+            <p>Developer of this Quran App</p>
+            <p>Building innovative and user-friendly web applications.</p>
+ <!-- Social Media Icons -->
+ <div class="social-icons">
+    <a href="https://wa.me/+923441092910" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+    <a href="https://github.com/WAQas-khan-TechPro" target="_blank" class="github"><i class="fab fa-github"></i></a>
+    <a href="https://instagram.com/in/code2x_755" target="_blank" class="instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://tiktok.com/in/waqas_25754" target="_blank" class="tiktok"><i class="fab fa-tiktok"></i></a>
+    <div class="footer-container">
+        <p>© 2025 Quran App | Developed by <strong>Waqas Khan</strong></p>
+        <p>Bringing Islamic resources to life with technology.</p>
+    </div>
+      </div>
+        </div>
+        
+    </footer>
+    
+    
+    <script src="script2.js"></script>
+</body>
+</html>
